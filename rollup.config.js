@@ -1,3 +1,4 @@
+// 模块打包器 rollup 的配置文件
 import path from 'path'
 import ts from 'rollup-plugin-typescript2'
 import replace from '@rollup/plugin-replace'

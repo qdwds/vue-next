@@ -1,4 +1,5 @@
 module.exports = {
+  //  测试框架 jest 的配置文件
   preset: 'ts-jest',
   setupFilesAfterEnv: ['./scripts/setupJestEnv.ts'],
   globals: {
