@@ -13,6 +13,7 @@ import { nodeOps } from './nodeOps'
 import { patchProp, forcePatchProp } from './patchProp'
 // Importing from the compiler, will be tree-shaken in prod
 import { isFunction, isString, isHTMLTag, isSVGTag, extend } from '@vue/shared'
+import { create } from 'domain'
 
 declare module '@vue/reactivity' {
   export interface RefUnwrapBailTypes {
@@ -50,23 +51,27 @@ export const hydrate = ((...args) => {
   ensureHydrationRenderer().hydrate(...args)
 }) as RootHydrateFunction
 
+//  渲染？
 export const createApp = ((...args) => {
   const app = ensureRenderer().createApp(...args)
 
   if (__DEV__) {
     injectNativeTagCheck(app)
   }
-
+  // create.mount
   const { mount } = app
   app.mount = (containerOrSelector: Element | ShadowRoot | string): any => {
+    //  传入的#app根节点
     const container = normalizeContainer(containerOrSelector)
     if (!container) return
+    //  ._component 是 setip和template
     const component = app._component
     if (!isFunction(component) && !component.render && !component.template) {
       component.template = container.innerHTML
     }
-    // clear content before mounting
+    // 挂载前清除内容
     container.innerHTML = ''
+    //  根节点挂载proxy
     const proxy = mount(container)
     if (container instanceof Element) {
       container.removeAttribute('v-cloak')

@@ -14,27 +14,22 @@
     <script>
         const {
             createApp,
-            reactive,
-            computed,
+            ref
         } = Vue
         const MyComponent = {
-            template: `
-                <button @click="click">
-                {{ state.message }}
-                </button>
-            `,
+            template:
+                `
+                    <button @click="add"> {{ count }} </button>
+                `,
             setup() {
-                const state = reactive({
-                    message:'Hello Vue 3!!'
-                })
-                function click() {
-                    state.message = state.message.split('').reverse().join('')
-                }
+                const count = ref(0);
+                const add = () => count.value += 1;
                 return {
-                    state,
-                    click
+                    count,
+                    add
                 }
             }
+
         }
         createApp(MyComponent).mount('#app')
     </script>

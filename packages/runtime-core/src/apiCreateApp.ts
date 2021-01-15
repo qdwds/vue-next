@@ -112,7 +112,7 @@ export function createAppContext(): AppContext {
     provides: Object.create(null)
   }
 }
-
+//  定义createapp类型
 export type CreateAppFunction<HostElement> = (
   rootComponent: Component,
   rootProps?: Data | null
@@ -121,9 +121,10 @@ export type CreateAppFunction<HostElement> = (
 let uid = 0
 
 export function createAppAPI<HostElement>(
-  render: RootRenderFunction,
+  render: RootRenderFunction, //  需要渲染的
   hydrate?: RootHydrateFunction
 ): CreateAppFunction<HostElement> {
+  // 接受 setup 和tamplate
   return function createApp(rootComponent, rootProps = null) {
     if (rootProps != null && !isObject(rootProps)) {
       __DEV__ && warn(`root props passed to app.mount() must be an object.`)
@@ -223,18 +224,18 @@ export function createAppAPI<HostElement>(
         context.directives[name] = directive
         return app
       },
-
+      //  rootContainer 主节点 #app
       mount(rootContainer: HostElement, isHydrate?: boolean): any {
         if (!isMounted) {
           const vnode = createVNode(
             rootComponent as ConcreteComponent,
             rootProps
           )
-          // store app context on the root VNode.
-          // this will be set on the root instance on initial mount.
+          //  将应用程序上下文存储在根VNode上。
+          //  这将在初始安装的根实例上设置。
           vnode.appContext = context
 
-          // HMR root reload
+          // HMR根重载
           if (__DEV__) {
             context.reload = () => {
               render(cloneVNode(vnode), rootContainer)
@@ -248,7 +249,7 @@ export function createAppAPI<HostElement>(
           }
           isMounted = true
           app._container = rootContainer
-          // for devtools and telemetry
+          // 用于devtools和遥测
           ;(rootContainer as any).__vue_app__ = app
 
           if (__DEV__ || __FEATURE_PROD_DEVTOOLS__) {

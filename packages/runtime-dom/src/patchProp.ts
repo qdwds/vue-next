@@ -83,12 +83,12 @@ function shouldSetAsProp(
     return false
   }
 
-  // spellcheck and draggable are numerated attrs, however their
-  // corresponding DOM properties are actually booleans - this leads to
-  // setting it with a string "false" value leading it to be coerced to
-  // `true`, so we need to always treat them as attributes.
-  // Note that `contentEditable` doesn't have this problem: its DOM
-  // property is also enumerated string values.
+  //  拼写检查和可拖动是数字属性，但是它们
+  //  相应的DOM属性实际上是布尔值-这导致
+  //  将其设置为字符串“ false”值，导致将其强制转换为
+  //  `true`，因此我们需要始终将它们视为属性。
+  //  注意，`contentEditable`不存在此问题：其DOM
+  //  属性也是枚举的字符串值。
   if (key === 'spellcheck' || key === 'draggable') {
     return false
   }
