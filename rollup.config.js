@@ -1,4 +1,3 @@
-// 模块打包器 rollup 的配置文件
 import path from 'path'
 import ts from 'rollup-plugin-typescript2'
 import replace from '@rollup/plugin-replace'
@@ -80,8 +79,8 @@ function createConfig(format, output, plugins = []) {
     console.log(require('chalk').yellow(`invalid format: "${format}"`))
     process.exit(1)
   }
-
-  output.sourcemap = !!process.env.SOURCE_MAP
+  output.sourcemap = true //  开启sourcemap
+  // output.sourcemap = !!process.env.SOURCE_MAP
   output.externalLiveBindings = false
 
   const isProductionBuild =
